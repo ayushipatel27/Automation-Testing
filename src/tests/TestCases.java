@@ -12,23 +12,35 @@ public class TestCases {
 	private static WebDriver driver;
 	
 	public static void main(String[] args) throws InterruptedException {
+		
+		// Navigate to URl
 		System.out.println("Test Case 1\n");
 		navigateTo("https://developers.google.com/");
+		
+		// Confirm text under events is equal to given text
 		System.out.println("Test Case 2\n");
 		confirmText("Hone your skills on the latest cloud technologies with Google experts at hundreds of breakout sessions and interactive on-demand hands-on labs and bootcamps. You'll have the opportunity to engage with the best minds in cloud technology on how your industry is adapting, innovating, and growing with cloud.", "//*[@id='gc-wrapper']/div[2]/article/article/section[1]/div/div[1]/div/div[1]/p[1]");
+		
+		// Click link "Google Cloud Next ’18 July 24-26 | San Francisco, USA"
 		System.out.println("Test Case 3\n");
 		clickButton("//*[@id=\'gc-wrapper\']/div[2]/article/article/section[1]/div/div[1]/div/a");
+		
+		// Confirm text of first h3 is "Imagine"
 		System.out.println("Test Case 4\n");
 		confirmText("Imagine", "//*[@id=\'main\']/span/div[2]/div/div/div[1]/div[1]/div/div[1]/div[2]/h3");
+		
+		// Click button "Get Updates"
 		System.out.println("Test Case 5\n");
 		clickButton("//*[@id=\'main\']/span/div[1]/div/div/div/div[3]/div[2]/div/button");
+		
+		// Send keys and select from dropdown list
 		System.out.println("Test Case 6\n");
 		sendKeys();
 		selectFromDropDown();
 	}
 	/**
-	 * This method navigating to given url on Chrome
-	 * @param url : the url that user is trying to navigate
+	 * This method is navigating to given url on Chrome
+	 * @param url : the url that user is trying to navigate to
 	 * @throws InterruptedException
 	 */
 	public static void navigateTo(String url) throws InterruptedException {
@@ -62,10 +74,16 @@ public class TestCases {
 	 */
 	public static void confirmText(String text, String xpath) {
 		System.out.println("Trying to confirm that given string is equal to the text on page.");
+		
+		// wait to locate element and find
 		waitToLocate(xpath);
 		WebElement element = driver.findElement(By.xpath(xpath));
+		
+		// print results
 		System.out.println("Test case: " + text);
 		System.out.println("Result: " + element.getText());
+		
+		// check if they are equal to given text
 		if (element.getText().equals(text)) {
 			System.out.println("\nEquals.");
 		}
@@ -81,6 +99,8 @@ public class TestCases {
 	 */
 	public static void clickButton(String xpath) {
 		System.out.println("Trying to click a link.\n");
+		
+		// look for element, throw exception if cannot find
 		WebElement element = null;
 		try {
 		waitToLocate(xpath);
@@ -89,8 +109,12 @@ public class TestCases {
 		}
 		catch (Exception e) {
 			System.out.println("Cannot find element.");
+			System.exit(0);
 		}
+		
+		// click button/link
 		element.click();
+		
 		System.out.println("\nSuccesfully clicked the link." + "\n\n");
 
 	}
@@ -100,6 +124,8 @@ public class TestCases {
 	 */
 	public static void sendKeys() {
 		System.out.println("Trying to send keys.");
+		
+		// wait to locate element and then send keys once found for each
 		
 		waitToLocate("//*[@id=\'firstName\']");
 		WebElement firstname = driver.findElement(By.xpath("//*[@id=\'firstName\']"));
@@ -130,7 +156,7 @@ public class TestCases {
 		company.sendKeys("Influence Health");
 		System.out.println("Company sent.");
 		
-
+		
 		System.out.println("Succesfully sent the keys." + "\n\n");
 	}
 	
@@ -140,6 +166,8 @@ public class TestCases {
 	public static void selectFromDropDown() {
 		System.out.println("Trying to select from dropdown.");
 		
+		// wait to locate element and then send keys once found for each
+
 		waitToLocate("//*[@id=\'industry\']");
 		Select industry = new Select(driver.findElement(By.xpath("//*[@id=\'industry\']")));
 		industry.selectByValue("Education");
@@ -150,7 +178,6 @@ public class TestCases {
 		country.selectByValue("US");
 		System.out.println("Selection complete.");
 
-		
 		
 		System.out.println("Succesfully selected values from dropdown." + "\n\n");
 	}
